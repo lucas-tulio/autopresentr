@@ -10,8 +10,6 @@ Uses the following open source projects:
 
 - Python 3.4
 - Flask
-- reveal.js
-- Wikipedia
 
 ### Setup
 
