@@ -2,12 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Presentation Generator</title>
+  <link rel="stylesheet" href={{ url_for('static', filename="css/index.css") }}>
+  <style type="text/css">
+    @font-face {
+      font-family: sourceSansPro;
+      src: url({{ url_for('static', filename="lib/font/source-sans-pro/source-sans-pro-regular.ttf") }});
+    }
+  </style>
 </head>
 <body>
-  <form action="/presentation" method="post">
-    <input type="text" name="subject" />
-    <input type="submit" value="Submit">
+  <h1>Subject</h1>
+  <form class="subject-form" action="/presentation" method="post">
+    <input class="submit-text" type="text" name="subject" ="1"/>
+    <input class="submit-button" type="submit" value="Go!" />
   </form>
 </body>
 </html>
