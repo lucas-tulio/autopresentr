@@ -20,17 +20,21 @@ def presentation():
 
   if subject == '':
     subject = wikipedia.random()
-  
+
   page = wikipedia.page(subject)
   sections = page.sections
 
   # Remove sections that we're not interested into
-  try:
-    sections.remove('External links')
-    sections.remove('References')
-    sections.remove('See also')
-  except Exception as e:
-    pass
+  try: sections.remove('External links')
+  except Exception as e: pass
+  try: sections.remove('References')
+  except Exception as e: pass
+  try: sections.remove('See also')
+  except Exception as e: pass
+  try: sections.remove('Bibliography')
+  except Exception as e: pass
+  try: sections.remove('Further reading')
+  except Exception as e: pass
 
   # Get an image
   summary_image = ""
