@@ -47,7 +47,7 @@ def presentation():
     sections_html = sections_html + "<section><h2>" + section + "</h2></section>"
 
     # Section content
-    section_sentences = section_content.strip('\n').split('.')
+    section_sentences = section_content.strip('\n').split('. ')
     if len(section_sentences) == 1 and section_sentences[0] == '':
       continue
 
