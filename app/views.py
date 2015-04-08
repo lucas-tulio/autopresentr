@@ -13,15 +13,12 @@ def index():
 def presentation():
 
   # Settings
-  detail_level = 0.2 # 0 = minimum text, 1 = full page
+  detail_level = 0.5 # 0 = minimum text, 1 = full page
 
   # Get the page
   subject = request.form['subject']
   page = wikipedia.page(subject)
   sections = page.sections
-
-  # Generate summary slides (from 3 to 5, if available)
-
 
   # Remove sections that we're not interested into
   try:
@@ -36,7 +33,7 @@ def presentation():
   try:
     summary_image = page.images[0]
   except Expcetion as e:
-    print("No images to use")
+    pass
 
   # Generate sections
   sections_html = ""
@@ -47,18 +44,20 @@ def presentation():
     sections_html = sections_html + "<section><h2>" + section + "</h2></section>"
 
     # Section content
-    section_sentences = section_content.strip('\n').split('. ')
+    section_sentences = section_content.split('\n')
     if len(section_sentences) == 1 and section_sentences[0] == '':
       continue
 
-    i = 0
     num_sentences = int(len(section_sentences) * detail_level)
-    
+
     if (num_sentences == 0):
       num_sentences = 1
+
+    i = 0
+    every = int(len(section_sentences) / num_sentences)
     for sentence in section_sentences:
-      if i % num_sentences == 0 and sentence != '':
-        sections_html = sections_html + "<section><p>" + sentence + ".</p></section>"
+      if i % every == 0 and sentence != '':
+        sections_html = sections_html + "<section><p>" + sentence.split('. ')[0] + ".</p></section>"
       i = i + 1
 
   return render_template('presentation.html',
