@@ -10,12 +10,22 @@
       src: url({{ url_for('static', filename="lib/font/source-sans-pro/source-sans-pro-regular.ttf") }});
     }
   </style>
+
+  
 </head>
 <body>
   <h1>Subject</h1>
   <form class="subject-form" action="/presentation" method="post">
-    <input class="submit-text" type="text" name="subject" ="1"/>
+    <input id="subject-input" class="submit-text" type="text" name="subject" ="1"/>
     <input class="submit-button" type="submit" value="Go!" />
   </form>
+
+  <!-- Automatic text field focus -->
+  <script>
+    window.onload = function() {
+      var input = document.getElementById("subject-input");
+      input.focus();
+    };
+  </script>
 </body>
 </html>
