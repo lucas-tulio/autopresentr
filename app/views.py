@@ -17,6 +17,10 @@ def presentation():
 
   # Get the page
   subject = request.form['subject']
+
+  if subject == '':
+    subject = wikipedia.random()
+  
   page = wikipedia.page(subject)
   sections = page.sections
 
