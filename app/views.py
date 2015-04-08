@@ -12,19 +12,26 @@ def index():
 @app.route('/presentation', methods=['POST'])
 def presentation():
 
+  # Get the page
   subject = request.form['subject']
-  print(subject)
-
   page = wikipedia.page(subject)
   sections = page.sections
 
-  sections_html = "<ul>"
+  # Remove sections that we're not interested into
+  try:
+    sections.remove('External links')
+    sections.remove('References')
+    sections.remove('See also')
+  except Exception as e:
+    pass
+
+  # Generate 
+  sections_html = ""
   for item in sections:
-    print(item)
-    sections_html = sections_html + "<li>" + item + "</li>"
-  sections_html = sections_html + "</ul>"
+    sections_html = sections_html + "<section><h2>" + item + "</h2></section>"
 
   return render_template('presentation.html',
     title=page.title,
-    summary=page.summary.split('.')[0],
+    summary_image=page.images[0],
+    summary=page.summary.split('.')[0] + ".",
     sections=Markup(sections_html))
