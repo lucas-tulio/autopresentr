@@ -1,8 +1,11 @@
 from app import app
+from app.db import Database
 from flask import render_template
 from flask import Markup
 from flask import request
 from . import wikipedia
+
+db = Database()
 
 @app.route('/')
 @app.route('/index')
@@ -22,6 +25,10 @@ def presentation():
     subject = wikipedia.random()
 
   page = wikipedia.page(subject)
+
+  # Log the request
+  db.log(request, subject)
+
   sections = page.sections
 
   # Remove sections that we're not interested into
