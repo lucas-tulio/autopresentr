@@ -1,5 +1,5 @@
 html, body {
-  font-family: sourceSansPro, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 18px;
   color: #404040;
   text-align: center;
@@ -7,6 +7,10 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+h1 {
+  font-weight: normal;
 }
 
 /* Page structure */
@@ -35,7 +39,7 @@ html, body {
 }
 
 .submit-text {
-  font-family: sourceSansPro, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 18px;
   color: #404040;
 
@@ -64,7 +68,7 @@ html, body {
 }
 
 .button {
-  font-family: sourceSansPro, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 18px;
   color: #404040;
 

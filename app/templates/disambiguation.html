@@ -10,14 +10,6 @@
   <link rel="stylesheet" href={{ url_for('static', filename="css/index.css") }}>
   <link rel="shortcut icon" href={{ url_for('static', filename="favicon.png") }}>
 
-  <!-- Font -->
-  <style type="text/css">
-    @font-face {
-      font-family: sourceSansPro;
-      src: url({{ url_for('static', filename="lib/font/source-sans-pro/source-sans-pro-regular.ttf") }});
-    }
-  </style>
-
   <script>
     function enterPresentation(subject) {
       document.forms[subject].submit();
