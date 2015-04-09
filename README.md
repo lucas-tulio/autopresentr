@@ -3,16 +3,20 @@ Procedural presentation generator
 
 Uses the following open source projects:
 
-- [reveal.js](https://github.com/hakimel/reveal.js) by [hakimel](https://github.com/hakimel)
-- [Wikipedia](https://github.com/goldsmith/Wikipedia) by [goldsmith](https://github.com/goldsmith) (a [fork of mine](https://github.com/lucasdnd/Wikipedia) to be specific)
+- [reveal.js](https://github.com/hakimel/reveal.js)
+- [Wikipedia](https://github.com/goldsmith/Wikipedia) (a [fork of mine](https://github.com/lucasdnd/Wikipedia) to be specific)
+- [PyMySQL](https://github.com/PyMySQL/PyMySQL)
 
 ### Requirements
 
 - Python 3.4
 - Flask
+- PyMySQL
 
 ### Setup
 
 1. `pip3 install flask`
+
+1. `pip3 install pymysql`
 
 1. `python3 run.py`
