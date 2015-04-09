@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Presentation Generator</title>
+  <title>autopresentr</title>
   <link rel="stylesheet" href={{ url_for('static', filename="css/index.css") }}>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <!-- Font -->
   <style type="text/css">
     @font-face {
       font-family: sourceSansPro;
@@ -19,20 +22,22 @@
     };
   </script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
 </head>
 
 <body>
-  <h1>Subject</h1>
-  <form class="subject-form" action="/presentation" method="post">
-    <input id="subject-input" class="submit-text" type="text" name="subject" ="1"/>
-    <input id="submit" class="button" type="submit" value="Go!" />
-    <input id="random" class="button" type="submit" value="Random" />
-  </form>
+  <div id="wrapper">
+    <div id="content">
+      <h1>autopresentr</h1>
+      <form class="subject-form" action="/presentation" method="post">
+        <input id="subject-input" class="submit-text" type="text" name="subject" ="1"/>
+        <input id="submit" class="button" type="submit" value="Go!" />
+        <input id="random" class="button" type="submit" value="Random" />
+      </form>
+    </div>
 
-  <footer>
-    <p>Created with ♥ by <a href="https://github.com/lucasdnd">Lucas Tulio</a> | Powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a>, <a href="https://github.com/goldsmith/Wikipedia">Wikipedia API for Python</a> and <a href="https://www.wikipedia.org/">Wikipedia</a></p>
-  </footer>
+    <div id="footer">
+      <p>Created by <a href="https://github.com/lucasdnd">Lucas Tulio</a> | Powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a>, <a href="https://github.com/goldsmith/Wikipedia">Wikipedia API for Python</a> and <a href="https://www.wikipedia.org/">Wikipedia</a></p>
+    </div>
+  </div>
 </body>
 </html>
