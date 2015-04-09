@@ -83,3 +83,7 @@ def presentation():
     summary_image=summary_image,
     summary=page.summary.split('.')[0] + ".",
     sections=Markup(sections_html))
+
+@app.errorhandler(404)
+def page_not_found(e):
+  return render_template('404.html')
