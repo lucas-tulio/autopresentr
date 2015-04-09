@@ -18,17 +18,33 @@ def presentation():
   # Settings
   detail_level = 0.5 # 0 = minimum text, 1 = full page
 
-  # Get the page
+  # Get the subject
   subject = request.form['subject']
-
   if subject == '':
     subject = wikipedia.random()
-
-  page = wikipedia.page(subject)
 
   # Log the request
   db.log(request, subject)
 
+  # Get the page, check for disambiguation
+  try:
+    page = wikipedia.page(subject)
+  except wikipedia.exceptions.DisambiguationError as e:
+
+    # Make a list of links with each option
+    links = "<p>"
+    for option in e.options:
+      links = links + "<form name='" + option + "' action='presentation' method='post'> " \
+        "<input type='hidden' id='subject-input' name='subject' value='" + option + "'/> " \
+        "</form>\n" \
+        "<a href='#' onclick=\"enterPresentation('" + option + "')\">" + option + "</a><br/>\n"
+    links = links + "</p>"
+
+    return render_template("disambiguation.html",
+      subject=subject,
+      options=Markup(links))
+
+  # All good, get sections
   sections = page.sections
 
   # Remove sections that we're not interested into

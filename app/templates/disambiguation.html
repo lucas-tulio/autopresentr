@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  
+  <meta charset="utf-8">
+  <title>autopresentr</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <link rel="stylesheet" href={{ url_for('static', filename="css/index.css") }}>
+  <link rel="shortcut icon" href={{ url_for('static', filename="favicon.png") }}>
+
+  <!-- Font -->
+  <style type="text/css">
+    @font-face {
+      font-family: sourceSansPro;
+      src: url({{ url_for('static', filename="lib/font/source-sans-pro/source-sans-pro-regular.ttf") }});
+    }
+  </style>
+
+  <script>
+    function enterPresentation(subject) {
+      document.forms[subject].submit();
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <div id="wrapper">
+
+    <div id="content">
+      <h3>What do you mean by '{{ subject }}'? </h3>
+      {{ options }}
+    </div>
+
+    <div id="footer">
+      <p>Created with ♥ by <a href="https://github.com/lucasdnd">Lucas Tulio</a> | Powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a>, <a href="https://github.com/goldsmith/Wikipedia">Wikipedia </a> and <a href="https://github.com/PyMySQL/PyMySQL">PyMySQL</a></p>
+    </div>
+
+  </div>
+
+</body>
+</html>
