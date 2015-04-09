@@ -11,8 +11,18 @@
     }
   </style>
 
-  
+  <!-- Automatic text field focus -->
+  <script>
+    window.onload = function() {
+      var input = document.getElementById("subject-input");
+      input.focus();
+    };
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
 </head>
+
 <body>
   <h1>Subject</h1>
   <form class="subject-form" action="/presentation" method="post">
@@ -21,12 +31,8 @@
     <input id="random" class="button" type="submit" value="Random" />
   </form>
 
-  <!-- Automatic text field focus -->
-  <script>
-    window.onload = function() {
-      var input = document.getElementById("subject-input");
-      input.focus();
-    };
-  </script>
+  <footer>
+    <p>Created with ♥ by <a href="https://github.com/lucasdnd">Lucas Tulio</a> | Powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a>, <a href="https://github.com/goldsmith/Wikipedia">Wikipedia API for Python</a> and <a href="https://www.wikipedia.org/">Wikipedia</a></p>
+  </footer>
 </body>
 </html>

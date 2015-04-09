@@ -4,11 +4,11 @@ body {
   color: #404040;
   text-align: center;
 
-  padding-top: 300px;
+  padding-top: 15%;
 }
 
 .subject-form {
-  width: 400px;
+  max-width: 370px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -29,6 +29,12 @@ body {
   margin: 0;
 }
 
+@media screen and (max-width: 420px) {
+  .submit-text {
+    width: 70%;
+  }
+}
+
 .button {
   font-family: sourceSansPro, sans-serif;
   font-size: 18px;
@@ -38,15 +44,25 @@ body {
   outline: 0;
   cursor: pointer;
 
+  height: 38px;
+
   border: 3px solid #404040;
 }
 
 #submit {
   width: 50px;
-  height: 38px;
   margin-left: -8px;
 }
 
 #random {
   margin-top: 24.120px;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
 }

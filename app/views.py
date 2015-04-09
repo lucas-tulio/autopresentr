@@ -40,7 +40,7 @@ def presentation():
   summary_image = ""
   try:
     summary_image = page.images[0]
-  except Expcetion as e:
+  except Exception as e:
     pass
 
   # Generate sections
@@ -76,10 +76,3 @@ def presentation():
     summary_image=summary_image,
     summary=page.summary.split('.')[0] + ".",
     sections=Markup(sections_html))
-
-
-
-
-
-
-
