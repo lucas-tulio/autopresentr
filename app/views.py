@@ -58,6 +58,8 @@ def presentation():
   except Exception as e: pass
   try: sections.remove('Further reading')
   except Exception as e: pass
+  try: sections.remove('Footnotes')
+  except Exception as e: pass
 
   # Get an image
   summary_image = ""
