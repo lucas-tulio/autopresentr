@@ -1,5 +1,5 @@
-# presentation-generator
-Procedural presentation generator
+# autopresentr
+Procedural presentation generator. http://autopresentr.co
 
 Uses the following open source projects:
 
