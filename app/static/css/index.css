@@ -81,6 +81,10 @@ h1 {
   border: 3px solid #404040;
 }
 
+#loading {
+  display: none;
+}
+
 #submit {
   width: 50px;
   margin-left: -9px;

@@ -12,6 +12,7 @@
 
   <script>
     function enterPresentation(subject) {
+      document.getElementById("loading").style.display = "block";
       document.forms[subject].submit();
     }
   </script>
@@ -25,6 +26,10 @@
     <div id="content">
       <h3>What do you mean by '{{ subject }}'? </h3>
       {{ options }}
+    </div>
+
+    <div id="loading">
+      <p>Creating your presentation, please wait...</p>
     </div>
 
     <div id="footer">
