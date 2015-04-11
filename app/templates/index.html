@@ -23,6 +23,11 @@
       document.getElementById("loading").style.display = "block";
     }
 
+    // Empty the text field when clicking "Random"
+    function emptyField() {
+      document.getElementById("subject-input").value = "";
+    }
+
     // Google Analytics
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -48,7 +53,7 @@
       <form class="subject-form" action="/presentation" method="post" onsubmit="showLoading();">
         <input id="subject-input" class="submit-text" type="text" name="subject"/>
         <input id="submit" class="button" type="submit" value="Go!" />
-        <input id="random" class="button" type="submit" value="Random" />
+        <input id="random" class="button" type="submit" value="Random" onclick="emptyField();" />
       </form>
 
       <div id="loading">
