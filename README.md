@@ -11,6 +11,7 @@ Uses the following open source projects:
 ### Requirements
 
 - Python 3.4
+- BeautifulSoup4
 - Flask
 - PyMySQL
 
@@ -19,5 +20,7 @@ Uses the following open source projects:
 1. `pip3 install flask`
 
 1. `pip3 install pymysql`
+
+1. `pip3 install beautifulsoup4`
 
 1. `python3 run.py`
