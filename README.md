@@ -17,7 +17,7 @@ Uses the following open source projects:
 
 ### Setup
 
-1. `pip3 install -r requirements.tx`
+1. Install the requirements: `pip3 install -r requirements.tx`
 
 1. Run the app: `python3 run.py`
 
