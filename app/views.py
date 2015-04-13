@@ -24,7 +24,8 @@ def presentation():
     subject = wikipedia.random()
 
   # Log the request
-  db.log(request, subject)
+  if db.is_logging:
+    db.log(request, subject)
 
   # Get the page, check for disambiguation
   try:

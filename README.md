@@ -13,14 +13,24 @@ Uses the following open source projects:
 - Python 3.4
 - BeautifulSoup4
 - Flask
-- PyMySQL
+- MySQL and PyMySQL (optional)
 
 ### Setup
 
-1. `pip3 install flask`
+1. Install flask: `pip3 install flask`
 
-1. `pip3 install pymysql`
+1. Install BeautifulSoup4: `pip3 install beautifulsoup4`
 
-1. `pip3 install beautifulsoup4`
+1. Run the app: `python3 run.py`
 
-1. `python3 run.py`
+##### Logging
+
+If you need to log user access in a production environment, you can do so by following these steps:
+
+1. Install MySQL
+
+1. Install PyMySQL: `pip3 install pymysql`
+
+1. Run `db/create-schema.sql` in your database
+
+1. Open `app.conf`, set logging to True (`logging=True`) and enter your database connection info as needed.

@@ -1,20 +1,27 @@
-import pymysql
+# Conditional pymysql import
+with open("app.conf", "r") as f:
+  logging = f.readline().split("=")[1].rstrip("\n")
+  if logging == "True":
+    import pymysql
 
+# Database access class
 class Database:
 
   def __init__(self):
 
     self.cur = None
     self.conn = None
+    self.is_logging = False
 
     # Read parameters
-    f = open("db.conf", "r")
-    self.db_host = f.readline().split("=")[1].rstrip("\n")
-    self.db_port = f.readline().split("=")[1].rstrip("\n")
-    self.db_user = f.readline().split("=")[1].rstrip("\n")
-    self.db_password = f.readline().split("=")[1].rstrip("\n")
-    self.db_schema = f.readline().split("=")[1].rstrip("\n")
-    f.close()
+    with open("app.conf", "r") as f:
+      self.logging = f.readline().split("=")[1].rstrip("\n")
+      self.is_logging = logging == "True"
+      self.db_host = f.readline().split("=")[1].rstrip("\n")
+      self.db_port = f.readline().split("=")[1].rstrip("\n")
+      self.db_user = f.readline().split("=")[1].rstrip("\n")
+      self.db_password = f.readline().split("=")[1].rstrip("\n")
+      self.db_schema = f.readline().split("=")[1].rstrip("\n")
 
   def __del__(self):
     self._disconnect()
