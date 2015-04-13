@@ -17,9 +17,7 @@ Uses the following open source projects:
 
 ### Setup
 
-1. Install flask: `pip3 install flask`
-
-1. Install BeautifulSoup4: `pip3 install beautifulsoup4`
+1. `pip3 install -r requirements.tx`
 
 1. Run the app: `python3 run.py`
 
