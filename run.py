@@ -19,4 +19,5 @@ with open("app.conf") as conf:
   else:
     print("Logging is DISABLED by default.\nTo enable it, edit 'app.conf', set 'logging' to 'True' and enter your database connection information as needed.\n")
 
-app.run(debug=True, host='0.0.0.0', port=8000)
+# app.run(debug=True, host='0.0.0.0', port=8000)
+app.run()
