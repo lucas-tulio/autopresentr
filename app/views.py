@@ -115,16 +115,23 @@ def presentation():
 
   # Sections title and content
   sections_html = ""
+  section_title = ""
 
   for section in sections:
 
     # Get the text in that section
     section_content = page.section(section)
 
-    # TODO: check if the section is empty
+    # If the section is empty, concat its title to the next section title
+    if section_content == "":
+      section_title = section + ": "
+      continue
+    else:
+      section_title = section_title + section
 
     # Section title
-    sections_html = sections_html + "<section><h2>" + section + "</h2></section>"
+    sections_html = sections_html + "<section><h2>" + section_title + "</h2></section>"
+    section_title = ""
 
     # Get the section paragraphs, according to the detail_level
     section_paragraphs = section_content.split('\n')
