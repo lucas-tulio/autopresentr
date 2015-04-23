@@ -59,14 +59,19 @@ def presentation():
 
   # Get some images
   images = [image for image in page.images if ".jpg" in image]
-  summary_image = images[0]
 
   #
   # Generate a summary
   #
   summary_html = "<section><h2>Summary</h2>"
   summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
-  
+
+  # Get an image
+  try:
+    summary_image = images[0]
+  except Exception as e:
+    summary_image = None
+
   # Here we append two or more sentences in the same slide if they're too small
   usable_sentences = []
   append_next = False
@@ -90,7 +95,10 @@ def presentation():
   summary_page = 0
   for sentence in usable_sentences:
     if summary_page == 0:
-      summary_html = summary_html + "<p>" + sentence + "</p><img style='position: relative; max-width: 50%; max-height: 30%;' src='" + summary_image + "' /></section>"
+      summary_html = summary_html + "<p>" + sentence + "</p>"
+      if summary_image is not None:
+        summary_html = summary_html + "<img style='position: relative; max-width: 50%; max-height: 30%;' src='" + summary_image + "' />"
+      summary_html = summary_html + "</section>"
     else:
       summary_html = summary_html + "<section><p>" + sentence + "</p></section>"
     summary_page = summary_page + 1
