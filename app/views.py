@@ -1,8 +1,10 @@
 from app import app
 from app.db import Database
+
 from flask import render_template
 from flask import Markup
 from flask import request
+
 from . import wikipedia
 
 db = Database()
@@ -49,20 +51,8 @@ def presentation():
   sections = page.sections
 
   # Remove sections that we're not interested into
-  try: sections.remove('External links')
-  except Exception as e: pass
-  try: sections.remove('References')
-  except Exception as e: pass
-  try: sections.remove('See also')
-  except Exception as e: pass
-  try: sections.remove('Bibliography')
-  except Exception as e: pass
-  try: sections.remove('Further reading')
-  except Exception as e: pass
-  try: sections.remove('Footnotes')
-  except Exception as e: pass
-  try: sections.remove('Notes')
-  except Exception as e: pass
+  ignored_sections = ['External links', 'References', 'See also', 'Bibliography', 'Further reading', 'Footnotes', 'Notes']
+  sections = [section for section in sections if section not in ignored_sections]
 
   # Get an image
   summary_image = ""
