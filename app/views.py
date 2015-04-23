@@ -92,6 +92,7 @@ def presentation():
     if len(sentence) < min_slide_length:
       append_next = True
 
+  # Generate the summary pages
   summary_page = 0
   for sentence in usable_sentences:
     if summary_page == 0:
@@ -114,30 +115,29 @@ def presentation():
 
   # Sections title and content
   sections_html = ""
+
   for section in sections:
+
+    # Get the text in that section
     section_content = page.section(section)
+
+    # TODO: check if the section is empty
 
     # Section title
     sections_html = sections_html + "<section><h2>" + section + "</h2></section>"
 
-    # Section content
-    if section_content is None:
-      continue
+    # Get the section paragraphs, according to the detail_level
+    section_paragraphs = section_content.split('\n')
+    num_paragraphs = int(len(section_paragraphs) * detail_level)
 
-    section_sentences = section_content.split('\n')
-    if len(section_sentences) == 1 and section_sentences[0] == '':
-      continue
-
-    num_sentences = int(len(section_sentences) * detail_level)
-
-    if (num_sentences == 0):
-      num_sentences = 1
+    if (num_paragraphs == 0):
+      num_paragraphs = 1
 
     i = 0
-    every = int(len(section_sentences) / num_sentences)
-    for sentence in section_sentences:
-      if i % every == 0 and sentence != '':
-        sections_html = sections_html + "<section><p>" + sentence.split('. ')[0] + ".</p></section>"
+    every = int(len(section_paragraphs) / num_paragraphs)
+    for paragraph in section_paragraphs:
+      if i % every == 0 and paragraph != '':
+        sections_html = sections_html + "<section><p>" + sent_detector.tokenize(paragraph.strip())[0] + "</p></section>"
       i = i + 1
 
   return render_template('presentation.html',
