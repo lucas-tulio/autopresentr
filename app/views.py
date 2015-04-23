@@ -4,10 +4,16 @@ from app.db import Database
 from flask import render_template
 from flask import Markup
 from flask import request
+import nltk.data
 
 from . import wikipedia
 
+# Database access, if needed
 db = Database()
+
+# Settings
+min_slide_length = 150 # Min text inside one slide, in characters (used in summary only)
+detail_level = 0.5 # Presentation detail level. 0 = minimum number of slides, 1 = lots of slides
 
 @app.route('/')
 @app.route('/index')
@@ -16,9 +22,6 @@ def index():
 
 @app.route('/presentation', methods=['POST'])
 def presentation():
-
-  # Settings
-  detail_level = 0.5 # 0 = minimum text, 1 = full page
 
   # Get the subject
   subject = request.form['subject']
@@ -31,7 +34,7 @@ def presentation():
 
   # Get the page, check for disambiguation
   try:
-    page = wikipedia.page(subject)
+    page = wikipedia.page(subject, preload=True)
   except wikipedia.exceptions.DisambiguationError as e:
 
     # Make a list of links with each option
@@ -47,21 +50,61 @@ def presentation():
       subject=subject,
       options=Markup(links))
 
-  # All good, get sections
+  #
+  # Start building the presentation
+  #
+
+  # Use NLTK to split sentences without errors
+  sent_detector = nltk.data.load("tokenizers/punkt/english.pickle")
+
+  # Get some images
+  images = [image for image in page.images if ".jpg" in image]
+  summary_image = images[0]
+
+  #
+  # Generate a summary
+  #
+  summary_html = "<section><h2>Summary</h2>"
+  summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
+  
+  # Here we append two or more sentences in the same slide if they're too small
+  usable_sentences = []
+  append_next = False
+  already_appended = False
+  for sentence in summary_sentences:
+    
+    if already_appended:
+      already_appended = False
+      continue
+    
+    if append_next:
+      usable_sentences[-1] = usable_sentences[-1] + " " + sentence
+      append_next = False
+      already_appended = True
+      continue
+    
+    usable_sentences.append(sentence)
+    if len(sentence) < min_slide_length:
+      append_next = True
+
+  summary_page = 0
+  for sentence in usable_sentences:
+    if summary_page == 0:
+      summary_html = summary_html + "<p>" + sentence + "</p><img style='position: relative; max-width: 50%; max-height: 30%;' src='" + summary_image + "' /></section>"
+    else:
+      summary_html = summary_html + "<section><p>" + sentence + "</p></section>"
+    summary_page = summary_page + 1
+
+  #
+  # Generate sections
+  #
   sections = page.sections
 
-  # Remove sections that we're not interested into
+  # Filter out the sections we're not interested in
   ignored_sections = ['External links', 'References', 'See also', 'Bibliography', 'Further reading', 'Footnotes', 'Notes']
   sections = [section for section in sections if section not in ignored_sections]
 
-  # Get an image
-  summary_image = ""
-  try:
-    summary_image = page.images[0]
-  except Exception as e:
-    pass
-
-  # Generate sections
+  # Sections title and content
   sections_html = ""
   for section in sections:
     section_content = page.section(section)
@@ -92,7 +135,7 @@ def presentation():
   return render_template('presentation.html',
     title=page.title,
     summary_image=summary_image,
-    summary=page.summary.split('.')[0] + ".",
+    summary=Markup(summary_html),
     sections=Markup(sections_html))
 
 @app.errorhandler(404)
