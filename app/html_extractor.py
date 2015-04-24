@@ -6,7 +6,8 @@ class WikiHTMLParser(HTMLParser):
 
     HTMLParser.__init__(self)
 
-    self.tables = [] # Will be a list of tuples
+    self.tables = [] # Will be a list of tuples: (section, table_html)
+    self.images = [] # Will be a list of tuples: (section, image_url)
 
     # Current parsing state
     self.inside_header = False

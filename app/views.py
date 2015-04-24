@@ -7,7 +7,7 @@ from flask import request
 import nltk.data
 
 from . import wikipedia
-from app.table_extractor import WikiHTMLParser
+from app.html_extractor import WikiHTMLParser
 
 # Database access, if needed
 db = Database()
