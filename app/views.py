@@ -54,6 +54,11 @@ def presentation():
       subject=subject,
       options=Markup(links))
 
+  except wikipedia.exceptions.PageError as e:
+
+    return render_template("404.html",
+      message=Markup("<p>'" + subject + "' could not be found.</p>")), 404
+
   #
   # Start building the presentation
   #
