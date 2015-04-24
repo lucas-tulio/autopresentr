@@ -145,6 +145,21 @@ def presentation():
     sections_html = sections_html + "<section><h2>" + section_title + "</h2></section>"
     section_title = ""
 
+    # Any tables to show?
+    table_html = None
+    try:
+      table_html = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
+      table_html = table_html.replace("<a>", "").replace("</a>", "").replace("<span>", "").replace("</span>", "")
+    except Exception as e:
+      table_html = None
+      pass
+
+    if table_html is not None and table_html != "":
+      font_size = 36
+      if len(table_html) > 800:
+        font_size = 16
+      sections_html = sections_html + "<section style='font-size: " + str(font_size) + "px;'>" + table_html + "</section>"
+
     # Get the section paragraphs, according to the detail_level
     section_paragraphs = section_content.split('\n')
     num_paragraphs = int(len(section_paragraphs) * detail_level)
@@ -158,18 +173,6 @@ def presentation():
       if i % every == 0 and paragraph != '':
         sections_html = sections_html + "<section><p>" + sent_detector.tokenize(paragraph.strip())[0] + "</p></section>"
       i = i + 1
-
-    # Any tables to show?
-    table_html = None
-    try:
-      table_html = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
-      table_html = table_html.replace("<a>", "").replace("</a>", "").replace("<span>", "").replace("</span>", "")
-    except Exception as e:
-      table_html = None
-      pass
-
-    if table_html is not None and table_html != "":
-      sections_html = sections_html + "<section style='font-size: 16px;'>" + table_html + "</section>"
 
   return render_template('presentation.html',
     title=page.title,
