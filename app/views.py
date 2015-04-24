@@ -160,13 +160,16 @@ def presentation():
       i = i + 1
 
     # Any tables to show?
-    table = None
+    table_html = None
     try:
-      table = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
+      table_html = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
+      table_html = table_html.replace("<a>", "").replace("</a>", "").replace("<span>", "").replace("</span>", "")
     except Exception as e:
+      table_html = None
       pass
-    if table is not None and table != "":
-      sections_html = sections_html + "<section style='font-size: 16px;'>" + table.replace("<a>", "").replace("</a>", "") + "</section>"
+
+    if table_html is not None and table_html != "":
+      sections_html = sections_html + "<section style='font-size: 16px;'>" + table_html + "</section>"
 
   return render_template('presentation.html',
     title=page.title,

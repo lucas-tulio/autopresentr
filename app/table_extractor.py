@@ -22,7 +22,17 @@ class WikiHTMLParser(HTMLParser):
     tag = tag.strip()
 
     if self.reading_table:
-      self.current_table = self.current_table + "<" + tag + ">"
+      
+      # Keep the colspan
+      colspan_html = ""
+      for attr in attrs:
+        if attr[0] == "colspan":
+          colspan_html = "colspan='" + attr[1] + "' "
+
+      self.current_table = self.current_table + "<" + tag
+      if colspan_html != "":
+        self.current_table = self.current_table + " " + colspan_html
+      self.current_table = self.current_table + " >"
 
     if tag == "h1" or tag == "h2" or tag == "h3" or tag == "h4" or tag == "h5" or tag == "h6":
       self.inside_header = True
