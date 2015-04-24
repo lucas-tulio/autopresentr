@@ -7,9 +7,13 @@ from flask import request
 import nltk.data
 
 from . import wikipedia
+from app.table_extractor import WikiHTMLParser
 
 # Database access, if needed
 db = Database()
+
+# Table extractor
+html_parser = WikiHTMLParser()
 
 # Settings
 min_slide_length = 150 # Min text inside one slide, in characters (used in summary only)
@@ -53,6 +57,9 @@ def presentation():
   #
   # Start building the presentation
   #
+
+  # Parse the HTML to extract tables
+  html_parser.feed(page.html())
 
   # Use NLTK to split sentences without errors
   sent_detector = nltk.data.load("tokenizers/punkt/english.pickle")
@@ -146,6 +153,15 @@ def presentation():
       if i % every == 0 and paragraph != '':
         sections_html = sections_html + "<section><p>" + sent_detector.tokenize(paragraph.strip())[0] + "</p></section>"
       i = i + 1
+
+    # Any tables to show?
+    table = None
+    try:
+      table = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
+    except Exception as e:
+      pass
+    if table is not None and table != "":
+      sections_html = sections_html + "<section style='font-size: 16px;'>" + table.replace("<a>", "").replace("</a>", "") + "</section>"
 
   return render_template('presentation.html',
     title=page.title,

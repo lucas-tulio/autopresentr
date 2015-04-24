@@ -1,23 +1,24 @@
-import wikipedia
 from html.parser import HTMLParser
 
-class MyHTMLParser(HTMLParser):
+class WikiHTMLParser(HTMLParser):
 
   def __init__(self):
 
     HTMLParser.__init__(self)
 
+    self.tables = [] # Will be a list of tuples
+
+    # Current parsing state
     self.inside_header = False
     self.inside_span = False
     self.reading_table = False
     
+    # Current section; and table being extracted
     self.current_section = ""
     self.current_table = ""
 
-    self.out = open("out.txt", "w")
-
   def handle_starttag(self, tag, attrs):
-    
+
     tag = tag.strip()
 
     if self.reading_table:
@@ -35,7 +36,7 @@ class MyHTMLParser(HTMLParser):
       self.current_table = "<table>"
 
   def handle_endtag(self, tag):
-    
+
     tag = tag.strip()
 
     if self.reading_table:
@@ -51,22 +52,14 @@ class MyHTMLParser(HTMLParser):
     # Finish reading table
     if tag == "table":
       self.reading_table = False
-      if self.current_section.strip() != "":
-        self.out.write("\nSection: " + self.current_section + "\n\n")
-        self.out.write(self.current_table + "\n")
+      if self.current_section.strip() != "" and self.current_table.strip() != "":
+        self.tables.append((self.current_section, self.current_table))
 
   def handle_data(self, data):
-    
-    clean_data = data.strip()
 
     if self.reading_table:
-      self.current_table = self.current_table + clean_data
+      self.current_table = self.current_table + data
 
+    clean_data = data.strip()
     if self.inside_header and self.inside_span and clean_data != "":
       self.current_section = clean_data
-
-print()
-
-parser = MyHTMLParser()
-page = wikipedia.page("São Paulo")
-parser.feed(page.html())
