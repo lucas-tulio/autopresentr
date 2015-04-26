@@ -74,3 +74,12 @@ class WikiHTMLParser(HTMLParser):
     clean_data = data.strip()
     if self.inside_header and self.inside_span and clean_data != "":
       self.current_section = clean_data
+
+  def clean(self):
+
+    # Cleans up tags written like "< a>" and "< span />"
+
+    for table_tuple in self.tables:
+      h = table_tuple[1]
+      h = h.replace("< ", "").replace(" <", "").replace(" />", "").replace(" / >", "").replace("/> ", "").replace(" >", "")
+      table_tuple = (table_tuple[0], h)

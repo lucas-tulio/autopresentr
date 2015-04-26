@@ -65,6 +65,7 @@ def presentation():
 
   # Parse the HTML to extract tables
   html_parser.feed(page.html())
+  html_parser.clean()
 
   # Use NLTK to split sentences without errors
   sent_detector = nltk.data.load("tokenizers/punkt/english.pickle")
@@ -150,6 +151,7 @@ def presentation():
     try:
       table_html = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
       table_html = table_html.replace("<a>", "").replace("</a>", "").replace("<span>", "").replace("</span>", "")
+      print(table_html + "\n\n")
     except Exception as e:
       table_html = None
       pass
