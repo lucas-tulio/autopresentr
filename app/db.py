@@ -39,11 +39,11 @@ class Database:
   #
   # Log
   #
-  def log(self, request, subject):
+  def log(self, request, subject, is_random):
 
     self._connect()
     try:
-      self.cur.execute("""INSERT INTO logs (user_ip, user_agent, subject) VALUES (%s, %s, %s)""", (str(request.remote_addr), str(request.user_agent), str(subject)))
+      self.cur.execute("""INSERT INTO logs (user_ip, user_agent, subject, is_random) VALUES (%s, %s, %s, %s)""", (str(request.remote_addr), str(request.user_agent), str(subject), is_random))
       self.conn.commit()
       self._disconnect()
       return True

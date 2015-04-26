@@ -26,12 +26,14 @@ def presentation():
 
   # Get the subject
   subject = request.form['subject']
+  is_random = False
   if subject == '':
+    is_random = True
     subject = wikipedia.random()
 
   # Log the request
   if db.is_logging:
-    db.log(request, subject)
+    db.log(request, subject, is_random)
 
   # Get the page, check for disambiguation
   try:
@@ -155,6 +157,7 @@ def presentation():
       table_html = None
       pass
 
+    # Adjust table size
     if table_html is not None and table_html != "":
       font_size = 36
       if len(table_html) > 800:
