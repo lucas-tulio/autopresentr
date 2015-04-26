@@ -78,7 +78,7 @@ class WikiHTMLParser(HTMLParser):
   def clean(self):
 
     # Cleans up tags written like "< a>" and "< span />"
-
+    new_tuples = []
     for table_tuple in self.tables:
       h = table_tuple[1]
       h = h.replace("< ", "<") \
@@ -89,9 +89,12 @@ class WikiHTMLParser(HTMLParser):
            .replace("/> ", "/>") \
            .replace(" /> ", "/>") \
            .replace(" / > ", "/>") \
-           .replace("<a>", "") \
-           .replace("</a>", "") \
-           .replace("<img>", "") \
-           .replace("</img>", "")
-           
-      table_tuple = (table_tuple[0], h)
+           .replace("<a>", " ") \
+           .replace("</a>", " ") \
+           .replace("<img>", " ") \
+           .replace("</img>", " ")
+      
+      new_table_tuple = (table_tuple[0], h)
+      new_tuples.append(new_table_tuple)
+    
+    self.tables = new_tuples
