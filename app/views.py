@@ -12,9 +12,6 @@ from app.html_extractor import WikiHTMLParser
 # Database access, if needed
 db = Database()
 
-# Table extractor
-html_parser = WikiHTMLParser()
-
 # Settings
 min_slide_length = 150 # Min text inside one slide, in characters (used in summary only)
 detail_level = 0.5 # Presentation detail level. 0 = minimum number of slides, 1 = lots of slides
@@ -64,6 +61,8 @@ def presentation():
   #
 
   # Parse the HTML to extract tables
+  # Table extractor
+  html_parser = WikiHTMLParser()
   html_parser.feed(page.html())
   html_parser.clean()
 
@@ -77,7 +76,9 @@ def presentation():
   # Generate a summary
   #
   summary_html = "<section><h2>Summary</h2>"
-  summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
+  summary_sentences = ""
+  if page.summary is not None and page.summary != "":
+    summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
 
   # Get an image
   try:
@@ -136,7 +137,7 @@ def presentation():
     section_content = page.section(section)
 
     # If the section is empty, concat its title to the next section title
-    if section_content == "":
+    if section_content is None or section_content == "":
       section_title = section + ": "
       continue
     else:
