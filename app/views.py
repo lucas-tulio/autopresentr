@@ -150,8 +150,6 @@ def presentation():
     table_html = None
     try:
       table_html = [html_parser.tables[i][1] for i, v in enumerate(html_parser.tables) if v[0] == section][0]
-      table_html = table_html.replace("<a>", "").replace("</a>", "").replace("<span>", "").replace("</span>", "")
-      print(table_html + "\n\n")
     except Exception as e:
       table_html = None
       pass

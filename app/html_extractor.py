@@ -81,5 +81,17 @@ class WikiHTMLParser(HTMLParser):
 
     for table_tuple in self.tables:
       h = table_tuple[1]
-      h = h.replace("< ", "").replace(" <", "").replace(" />", "").replace(" / >", "").replace("/> ", "").replace(" >", "")
+      h = h.replace("< ", "<") \
+           .replace(" <", "<") \
+           .replace(" >", ">") \
+           .replace("> ", ">") \
+           .replace(" />", "/>") \
+           .replace("/> ", "/>") \
+           .replace(" /> ", "/>") \
+           .replace(" / > ", "/>") \
+           .replace("<a>", "") \
+           .replace("</a>", "") \
+           .replace("<img>", "") \
+           .replace("</img>", "")
+           
       table_tuple = (table_tuple[0], h)
