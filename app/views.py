@@ -29,6 +29,17 @@ def presentation():
   # Get the subject
   query = request.form['subject']
 
+  # Theme selection
+  theme = "css/theme/black.css"
+  if "theme:" in query:
+    query_split = query.split("theme:")
+    theme = query_split[1]
+    if theme in ['beige', 'black', 'blood', 'league', 'moon', 'night', 'serif', 'simple', 'sky', 'solarized', 'white']:
+      theme = "css/theme/" + query_split[1] + ".css"
+    else:
+      theme = "css/theme/black.css"
+    query = query_split[0]
+
   # Lang selection
   if "lang:" in query:
     
@@ -184,7 +195,7 @@ def presentation():
         font_size = 16
       sections_html = sections_html + "<section style='font-size: " + str(font_size) + "px;'>" + table_html + "</section>"
 
-    # Get the section paragraphs, according to the detail_level
+    # GMark Brittenet the section paragraphs, according to the detail_level
     section_paragraphs = section_content.split('\n')
     num_paragraphs = int(len(section_paragraphs) * detail_level)
 
@@ -199,6 +210,7 @@ def presentation():
       i = i + 1
 
   return render_template('presentation.html',
+    theme=theme,
     title=page.title,
     summary_image=summary_image,
     summary=Markup(summary_html),
