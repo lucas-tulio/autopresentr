@@ -6,6 +6,8 @@ from flask import Markup
 from flask import request
 import nltk.data
 
+import requests
+
 from . import wikipedia
 from app.html_extractor import WikiHTMLParser
 
@@ -25,9 +27,23 @@ def index():
 def presentation():
 
   # Get the subject
-  subject = request.form['subject']
+  query = request.form['subject']
+
+  # Lang selection
+  if "lang:" in query:
+    
+    query_split = query.split("lang:")
+    lang = query_split[1]
+    subject = query_split[0]
+
+    wikipedia.set_lang(lang)
+
+  else:
+    subject = query
+
+  # Check for a random subject
   is_random = False
-  if subject == '':
+  if subject == "":
     is_random = True
     subject = wikipedia.random()
 
@@ -57,6 +73,10 @@ def presentation():
 
     return render_template("404.html",
       message=Markup("<p>'" + subject + "' could not be found.</p>")), 404
+
+  except requests.exceptions.ConnectionError as e:
+    wikipedia.set_lang("en")
+    page = wikipedia.page(subject, preload=True)
 
   #
   # Start building the presentation
