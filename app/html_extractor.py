@@ -1,4 +1,5 @@
 from html.parser import HTMLParser
+import re
 
 class WikiHTMLParser(HTMLParser):
 
@@ -94,6 +95,8 @@ class WikiHTMLParser(HTMLParser):
            .replace("</a>", " ") \
            .replace("<img>", " ") \
            .replace("</img>", " ")
+
+      h = re.sub("\[.*?\]", "", h).strip()
       
       new_table_tuple = (table_tuple[0], h)
       new_tuples.append(new_table_tuple)
