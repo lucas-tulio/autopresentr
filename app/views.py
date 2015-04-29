@@ -28,6 +28,10 @@ def presentation():
 
   # Get the subject
   query = request.form['subject']
+  try:
+    lang = request.form['language']
+  except Exception as e:
+    lang = "en"
 
   # Theme selection
   theme = "css/theme/black.css"
@@ -39,18 +43,11 @@ def presentation():
     else:
       theme = "css/theme/black.css"
     query = query_split[0]
-
-  # Lang selection
-  if "lang:" in query:
-    
-    query_split = query.split("lang:")
-    lang = query_split[1]
-    subject = query_split[0]
-
-    wikipedia.set_lang(lang)
-
   else:
     subject = query
+
+  # Language selection
+  wikipedia.set_lang(lang)
 
   # Check for a random subject
   is_random = False
@@ -72,6 +69,7 @@ def presentation():
     for option in e.options:
       links = links + "<form name='" + option + "' action='presentation' method='post'> " \
         "<input type='hidden' id='subject-input' name='subject' value='" + option + "'/> " \
+        "<input type='hidden' id='language-input' name='language' value='" + lang + "'/> " \
         "</form>\n" \
         "<a href='#' onclick=\"enterPresentation('" + option + "')\">" + option + "</a><br/>\n"
     links = links + "</p>"
