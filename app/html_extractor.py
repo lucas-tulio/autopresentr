@@ -96,6 +96,7 @@ class WikiHTMLParser(HTMLParser):
            .replace("<img>", " ") \
            .replace("</img>", " ")
 
+      # Remove reference square brackets
       h = re.sub("\[.*?\]", "", h).strip()
       
       new_table_tuple = (table_tuple[0], h)
