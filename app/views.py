@@ -42,7 +42,7 @@ def presentation():
       theme = "css/theme/" + query_split[1] + ".css"
     else:
       theme = "css/theme/black.css"
-    query = query_split[0]
+    subject = query_split[0]
   else:
     subject = query
 
