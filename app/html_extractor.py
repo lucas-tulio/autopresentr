@@ -78,6 +78,7 @@ class WikiHTMLParser(HTMLParser):
   def clean(self):
 
     # Cleans up tags written like "< a>" and "< span />"
+    # I hate having to do this
     new_tuples = []
     for table_tuple in self.tables:
       h = table_tuple[1]

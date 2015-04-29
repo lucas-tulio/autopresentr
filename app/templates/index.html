@@ -51,6 +51,7 @@
       <h1>autopresentr</h1>
       <p>Enter a subject, get a presentation</p>
       <form class="subject-form" action="/presentation" method="post" onsubmit="showLoading();">
+        <select class="language-select"><option value="en">en</option><option value="pt">pt</option></select>
         <input id="subject-input" class="submit-text" type="text" name="subject"/>
         <input id="submit" class="button" type="submit" value="Go!" />
         <input id="random" class="button" type="submit" value="Random" onclick="emptyField();" />
