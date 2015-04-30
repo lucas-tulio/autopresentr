@@ -33,6 +33,14 @@ def presentation():
   except Exception as e:
     lang = "en"
 
+  # Thank by lang
+  thank_translate = {
+      'en': 'Thank You',
+      'pt': 'Obrigado',
+      'es': 'Gracias',
+      'it': 'Grazie',
+      'de': 'Danke'
+  }
   # Theme selection
   theme = "css/theme/black.css"
   if "theme:" in query:
@@ -122,17 +130,17 @@ def presentation():
   append_next = False
   already_appended = False
   for sentence in summary_sentences:
-    
+
     if already_appended:
       already_appended = False
       continue
-    
+
     if append_next:
       usable_sentences[-1] = usable_sentences[-1] + " " + sentence
       append_next = False
       already_appended = True
       continue
-    
+
     usable_sentences.append(sentence)
     if len(sentence) < min_slide_length:
       append_next = True
@@ -212,7 +220,8 @@ def presentation():
     title=page.title,
     summary_image=summary_image,
     summary=Markup(summary_html),
-    sections=Markup(sections_html))
+    sections=Markup(sections_html),
+    thank=thank_translate[lang])
 
 @app.errorhandler(404)
 def page_not_found(e):
