@@ -33,6 +33,12 @@ def presentation():
   except Exception as e:
     lang = "en"
 
+  # Summary by lang
+  summary_translate = {
+    'en': 'Summary',
+    'pt': 'Introdução'
+  }
+
   # Thank by lang
   thank_translate = {
       'en': 'Thank You',
@@ -116,7 +122,7 @@ def presentation():
   #
   # Generate a summary
   #
-  summary_html = "<section><h2>Summary</h2>"
+  summary_html = "<section><h2>" + summary_translate[lang] + "</h2>"
   summary_sentences = ""
   if page.summary is not None and page.summary != "":
     summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
