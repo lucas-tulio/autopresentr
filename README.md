@@ -17,7 +17,15 @@ Uses the following open source projects:
 
 ### Setup
 
-1. Install the requirements: `pip3 install -r requirements.tx`
+1. Install the requirements: `pip3 install -r requirements.txt`
+
+1. Install nltk `punkt` package:
+```
+$ python3
+>>> import nltk
+>>> nltk.download()
+>>> punkt
+```
 
 1. Run the app: `python3 run.py`
 
