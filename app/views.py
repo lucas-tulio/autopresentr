@@ -39,8 +39,10 @@ def presentation():
       'pt': 'Obrigado',
       'es': 'Gracias',
       'it': 'Grazie',
+      'fr': 'Merci',
       'de': 'Danke'
   }
+
   # Theme selection
   theme = "css/theme/black.css"
   if "theme:" in query:
@@ -163,8 +165,12 @@ def presentation():
   sections = page.sections
 
   # Filter out the sections we're not interested in
-  ignored_sections = ['External links', 'References', 'See also', 'Bibliography', 'Further reading', 'Footnotes', 'Notes']
-  sections = [section for section in sections if section not in ignored_sections]
+  ignored_sections_en = ['External links',    'References',  'See also',   'Bibliography', 'Further reading', 'Footnotes', 'Notes']
+  ignored_sections_pt = ['Ligações externas', 'Referências', 'Ver também', 'Bibliografia', 'Leitura adicional', 'Notas']
+  if lang == "en":
+    sections = [section for section in sections if section not in ignored_sections_en]
+  elif lang == "pt":
+    sections = [section for section in sections if section not in ignored_sections_pt]
 
   # Sections title and content
   sections_html = ""
