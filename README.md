@@ -24,8 +24,8 @@ Uses the following open source projects:
 $ python3
 >>> import nltk
 >>> nltk.download()
->>> punkt
 ```
+Enter `d` to download, then enter `punkt`.
 
 1. Run the app: `python3 run.py`
 
