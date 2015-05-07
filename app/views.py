@@ -232,6 +232,7 @@ def presentation():
   return render_template('presentation.html',
     theme=theme,
     title=Markup(title_html),
+    page_title=page.title,
     title_background=title_background,
     summary=Markup(summary_html),
     sections=Markup(sections_html),
