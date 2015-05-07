@@ -120,6 +120,11 @@ def presentation():
   images = [image for image in page.images if ".jpg" in image]
 
   #
+  # Generate the title slide
+  #
+  title_html = "<section data-state='intro'><h1 data-state='intro'>" + page.title + "</h1></section>"
+
+  #
   # Generate a summary
   #
   summary_html = "<section><h2>" + summary_translate[lang] + "</h2>"
@@ -129,9 +134,9 @@ def presentation():
 
   # Get an image
   try:
-    summary_image = images[0]
+    title_background = images[0]
   except Exception as e:
-    summary_image = None
+    title_background = None
 
   # Here we append two or more sentences in the same slide if they're too small
   usable_sentences = []
@@ -157,10 +162,7 @@ def presentation():
   summary_page = 0
   for sentence in usable_sentences:
     if summary_page == 0:
-      summary_html = summary_html + "<p>" + sentence + "</p>"
-      if summary_image is not None:
-        summary_html = summary_html + "<img style='position: relative; max-width: 50%; max-height: 30%;' src='" + summary_image + "' />"
-      summary_html = summary_html + "</section>"
+      summary_html = summary_html + "<p>" + sentence + "</p></section>"
     else:
       summary_html = summary_html + "<section><p>" + sentence + "</p></section>"
     summary_page = summary_page + 1
@@ -229,8 +231,8 @@ def presentation():
 
   return render_template('presentation.html',
     theme=theme,
-    title=page.title,
-    summary_image=summary_image,
+    title=Markup(title_html),
+    title_background=title_background,
     summary=Markup(summary_html),
     sections=Markup(sections_html),
     thank=thank_translate[lang])
