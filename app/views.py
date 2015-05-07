@@ -171,8 +171,8 @@ def presentation():
   sections = page.sections
 
   # Filter out the sections we're not interested in
-  ignored_sections_en = ['External links',    'References',  'See also',   'Bibliography', 'Further reading', 'Footnotes', 'Notes']
-  ignored_sections_pt = ['Ligações externas', 'Referências', 'Ver também', 'Bibliografia', 'Leitura adicional', 'Notas']
+  ignored_sections_en = ['External links',    'References',  'See also',   'Bibliography', 'Further reading', 'Footnotes', 'Notes', 'Sources']
+  ignored_sections_pt = ['Ligações externas', 'Referências', 'Ver também', 'Bibliografia', 'Leitura adicional',            'Notas', 'Fontes']
   if lang == "en":
     sections = [section for section in sections if section not in ignored_sections_en]
   elif lang == "pt":
