@@ -122,7 +122,10 @@ def presentation():
   #
   # Generate the title slide
   #
-  title_html = "<section data-state='intro'><h1 data-state='intro'>" + page.title + "</h1></section>"
+  if len(images) > 0:
+    title_html = "<section data-state='intro'><h1 data-state='intro'>" + page.title + "</h1></section>"
+  else:
+    title_html = "<section><h1>" + page.title + "</h1></section>"
 
   #
   # Generate a summary
