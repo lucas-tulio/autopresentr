@@ -36,7 +36,7 @@ class WikiHTMLParser(HTMLParser):
         self.current_table = self.current_table + " " + colspan_html
       self.current_table = self.current_table + " >"
 
-    if tag == "h1" or tag == "h2" or tag == "h3" or tag == "h4" or tag == "h5" or tag == "h6":
+    if tag in ["h1", "h2", "h3", "h4", "h5", "h6"]:
       self.inside_header = True
       return
 
@@ -54,7 +54,7 @@ class WikiHTMLParser(HTMLParser):
     if self.reading_table:
       self.current_table = self.current_table + "</" + tag + ">"
 
-    if tag == "h1" or tag == "h2" or tag == "h3" or tag == "h4" or tag == "h5" or tag == "h6":
+    if tag in ["h1", "h2", "h3", "h4", "h5", "h6"]:
       self.inside_header = False
       return
     
