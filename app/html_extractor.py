@@ -14,6 +14,7 @@ class WikiHTMLParser(HTMLParser):
     self.inside_header = False
     self.inside_span = False
     self.reading_table = False
+    self.reading_image = False
     
     # Current section; and table being extracted
     self.current_section = ""
@@ -23,11 +24,13 @@ class WikiHTMLParser(HTMLParser):
 
     tag = tag.strip()
 
+    # Table!
     if self.reading_table:
       
       # Keep the colspan
       colspan_html = ""
       for attr in attrs:
+        # attr[0] is the attribute name, attr[1] is the attribute value
         if attr[0] == "colspan":
           colspan_html = "colspan='" + attr[1] + "' "
 
@@ -36,16 +39,37 @@ class WikiHTMLParser(HTMLParser):
         self.current_table = self.current_table + " " + colspan_html
       self.current_table = self.current_table + " >"
 
+    # Image!
+    elif self.reading_image:
+
+      # Get the image src
+      src = ""
+      for attr in attrs:
+        # attr[0] is the attribute name, attr[1] is the attribute value
+        if attr[0] == "src":
+          src = attr[1]
+
+      if self.current_section.strip() != "" and src.strip() != "":
+        self.images.append((self.current_section, src))
+
+    # Navigating through the html
     if tag in ["h1", "h2", "h3", "h4", "h5", "h6"]:
       self.inside_header = True
       return
 
+    # We need to get the text inside <span>s
     if self.inside_header and tag == "span":
       self.inside_span = True
 
+    # Found a table!
     if tag == "table":
       self.reading_table = True
       self.current_table = "<table>"
+    
+    # Found an image!
+    elif tag == "img":
+      self.reading_image = True
+      self.current_image = "<img "
 
   def handle_endtag(self, tag):
 
