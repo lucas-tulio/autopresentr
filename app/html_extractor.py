@@ -127,3 +127,12 @@ class WikiHTMLParser(HTMLParser):
       new_tuples.append(new_table_tuple)
     
     self.tables = new_tuples
+
+    # Cleans up the images list: we only want the jpegs
+    new_image_tuples = []
+    print(self.images)
+    for image_tuple in self.images:
+      img = image_tuple[1]
+      if ".svg" not in img:
+        new_image_tuples.append(img)
+    self.images = new_image_tuples
