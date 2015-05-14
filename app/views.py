@@ -218,7 +218,7 @@ def presentation():
         font_size = 16
       sections_html = sections_html + "<section style='font-size: " + str(font_size) + "px;'>" + table_html + "</section>"
 
-    # GMark Brittenet the section paragraphs, according to the detail_level
+    # Get the section paragraphs, according to the detail_level
     section_paragraphs = section_content.split('\n')
     num_paragraphs = int(len(section_paragraphs) * detail_level)
 
