@@ -2,6 +2,8 @@ create schema if not exists autopresentr;
 use autopresentr;
 
 drop table if exists logs;
+drop table if exists languages;
+drop table if exists cache;
 
 create table logs (
   id int(11) primary key not null auto_increment,
