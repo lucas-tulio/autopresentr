@@ -131,7 +131,6 @@ class WikiHTMLParser(HTMLParser):
     # Cleans up the images list: we only want the jpegs
     new_image_tuples = []
     for image_tuple in self.images:
-      img = image_tuple[1]
-      if ".svg" not in img:
-        new_image_tuples.append(img)
+      if ".svg" not in image_tuple[1]:
+        new_image_tuples.append((image_tuple[0], image_tuple[1]))
     self.images = new_image_tuples
