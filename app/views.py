@@ -127,6 +127,12 @@ def presentation():
   else:
     title_html = "<section><h1>" + page.title + "</h1></section>"
 
+  # Get an image for the title
+  try:
+    title_background = images[0]
+  except Exception as e:
+    title_background = None
+
   #
   # Generate a summary
   #
@@ -134,12 +140,6 @@ def presentation():
   summary_sentences = ""
   if page.summary is not None and page.summary != "":
     summary_sentences = sent_detector.tokenize(page.summary.split('\n')[0].strip())
-
-  # Get an image
-  try:
-    title_background = images[0]
-  except Exception as e:
-    title_background = None
 
   # Here we append two or more sentences in the same slide if they're too small
   usable_sentences = []
@@ -184,7 +184,9 @@ def presentation():
     sections = [section for section in sections if section not in ignored_sections_pt]
 
   # Sections title and content
+  section_id = 0
   sections_html = ""
+  sections_css = ""
   section_title = ""
 
   for section in sections:
@@ -199,10 +201,31 @@ def presentation():
     else:
       section_title = section_title + section
 
-    # Section title
-    sections_html = sections_html + "<section><h2>" + section_title + "</h2></section>"
-    section_title = ""
+    # Get an image for the section title
+    image_url = None
+    try:
+      image_url = [html_parser.images[i][1] for i, v in enumerate(html_parser.images) if v[0] == section][0]
+    except Exception as e:
+      image_url = None
+      pass
 
+    # Section title
+    if image_url is not None and image_url != "":
+      sections_html = sections_html + "<section data-state='section-" + str(section_id) + "'><h2 data-state='section-" + str(section_id) + "'>" + section_title + "</h2></section>"
+      sections_css = sections_css + "html.section-" + str(section_id) + " body { \
+                                      background: url(" + image_url + "); \
+                                      background-position: center; \
+                                      background-size: 100%; \
+                                      background-repeat: no-repeat; \
+                                    } \
+                                    html.section-" + str(section_id) + " h2 { \
+                                      text-shadow: 0px 2px #000; \
+                                    }"
+    else:
+      sections_html = sections_html + "<section><h2>" + section_title + "</h2></section>"
+
+    section_title = ""
+    
     # Any tables to show?
     table_html = None
     try:
@@ -232,6 +255,8 @@ def presentation():
         sections_html = sections_html + "<section><p>" + sent_detector.tokenize(paragraph.strip())[0] + "</p></section>"
       i = i + 1
 
+    section_id = section_id + 1
+
   return render_template('presentation.html',
     theme=theme,
     title=Markup(title_html),
@@ -239,6 +264,7 @@ def presentation():
     title_background=title_background,
     summary=Markup(summary_html),
     sections=Markup(sections_html),
+    sections_css=Markup(sections_css),
     thank=thank_translate[lang])
 
 @app.errorhandler(404)
