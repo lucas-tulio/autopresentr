@@ -132,5 +132,6 @@ class WikiHTMLParser(HTMLParser):
     new_image_tuples = []
     for image_tuple in self.images:
       if ".svg" not in image_tuple[1]:
-        new_image_tuples.append((image_tuple[0], image_tuple[1]))
+        img_url = image_tuple[1].replace("/thumb", "").split(".jpg")[0] + ".jpg"
+        new_image_tuples.append((image_tuple[0], img_url))
     self.images = new_image_tuples
