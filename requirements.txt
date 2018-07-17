@@ -1,6 +1,6 @@
 beautifulsoup4==4.3.2
 Flask==0.10.1
-gunicorn==19.3.0
+gunicorn==19.5.0
 itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
